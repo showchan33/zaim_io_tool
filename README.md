@@ -114,7 +114,7 @@ Upload of csv file completed.
 ```
 
 ### 注意事項
-* アップロード用のcsvファイルが必要です。csvファイルのデータはZaimのフォーマットになっている必要があります。データーフォマットが具体的にどのようなものかは、[csvinput/sample.csv](csvinput/sample.csv)やZaimのWebサイトからダウンロードツールしたcsvファイルの内容をご確認ください。
+* アップロード用のcsvファイルが必要です。csvファイルのデータはZaimのフォーマットになっている必要があります。データーフォマットが具体的にどのようなものかは、[csvinput/sample.csv](csvinput/sample.csv)やZaimのWebサイトからダウンロードしたcsvファイルの内容をご確認ください。
 * アップロード用のcsvファイルの文字コードはUTF-8の必要があります。Shift_JISコード等での動作は未確認です。
 * [csvinput/sample.csv](csvinput/sample.csv)を指定することでアップロードの動作確認が可能ですが、架空の口座情報（楽天カード XXXX-XXXX-XXXX-XXXX等）が追加されてしまう点にご注意ください。尚、追加された口座情報の削除はできませんが、非表示にすることは可能です。
 * **無料会員の場合、アップロードしたデータが反映されない**事象を確認しています。
