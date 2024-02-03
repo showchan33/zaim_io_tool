@@ -23,9 +23,9 @@ def create_payload_for_login(
   load_dotenv(env_file)
 
   ZAIM_USERNAME = os.getenv('ZAIM_USERNAME')
-  ZAIM_PASSQWORD = os.getenv('ZAIM_PASSQWORD')
+  ZAIM_PASSWORD = os.getenv('ZAIM_PASSWORD')
   payload['email_or_id'] = ZAIM_USERNAME
-  payload['password'] = ZAIM_PASSQWORD
+  payload['password'] = ZAIM_PASSWORD
 
   return payload
 

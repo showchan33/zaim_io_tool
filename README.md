@@ -36,12 +36,12 @@ pip3 install -r requirements.txt
 
 ```shell:.env
 ZAIM_USERNAME="your-email@example.com"
-ZAIM_PASSQWORD="password"
+ZAIM_PASSWORD="password"
 ```
 ↓ 変更例
 ```shell:.env
 ZAIM_USERNAME="your-true-email@example.com"
-ZAIM_PASSQWORD="01234567"
+ZAIM_PASSWORD="01234567"
 ```
 
 # 使い方
