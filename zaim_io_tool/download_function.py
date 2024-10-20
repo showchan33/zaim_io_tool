@@ -85,4 +85,3 @@ def download_csv(
 
   with open(filename, 'w', encoding=download_param.charset) as f:
     f.write(str(response.content, encoding=download_param.charset))
-

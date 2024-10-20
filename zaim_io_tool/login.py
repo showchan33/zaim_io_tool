@@ -10,7 +10,7 @@ def create_payload_for_login(
 ) -> dict:
   
   soup = BeautifulSoup(response.content, features="lxml")
-  form = soup.find("form", attrs={'id': 'login-form'})
+  form = soup.find("form", attrs={'class': 'kufu-form-group'})
 
   payload = dict()
   inputs = form.find_all("input", recursive=True)
@@ -33,14 +33,13 @@ def create_payload_for_login(
 def login(env_file: str = ".env") -> requests.sessions.Session:
 
   session = requests.Session()
-  url_root = "https://id.zaim.net"
-  response = session.get(url_root)
+  response = session.get("https://zaim.net/user_session/new")
   response.raise_for_status()
 
   payload = create_payload_for_login(response, env_file)
 
   # ログイン
-  response = session.post(f"{url_root}/login", data=payload)
+  response = session.post("https://id.kufu.jp/signin/basic", data=payload)
   response.raise_for_status()
 
   return session
