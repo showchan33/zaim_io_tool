@@ -15,9 +15,7 @@ ZaimのWebサイト上での以下の操作を、Pythonを使ってコマンド�
     * ※WindowsとMacでの動作は未確認
 * ツール
     * Python3
-        * 3.9.7でのみ動作確認
     * pip3
-        * Pythonパッケージをインストールするのに必要
 
 # 事前準備
 
@@ -25,8 +23,22 @@ ZaimのWebサイト上での以下の操作を、Pythonを使ってコマンド�
 
 以下のコマンドで、ツールを動かすのに必要なパッケージをインストールします。
 
+### 方法1: Poetryを利用
+
+```
+poetry install
+```
+
+### 方法2: pipを利用
+
 ```
 pip3 install -r requirements.txt
+```
+
+## Playwrightのインストール
+
+```
+playwright install
 ```
 
 ## Zaimにログインするための認証方法の設定

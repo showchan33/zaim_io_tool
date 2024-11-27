@@ -1,48 +1,49 @@
 import requests
-from bs4 import BeautifulSoup
 import os
 from dotenv import load_dotenv
 
-# ログインのために必要なpayloadを作成
-def create_payload_for_login(
-  response: requests.models.Response,
-  env_file: str,
-) -> dict:
-  
-  soup = BeautifulSoup(response.content, features="lxml")
-  form = soup.find("form", attrs={'class': 'kufu-form-group'})
+from playwright.sync_api import sync_playwright
+from websession.websession import WebSession
 
-  payload = dict()
-  inputs = form.find_all("input", recursive=True)
-  ext_attrs = ["value", "placeholder"]
-  for i in inputs:
-    for attr in ext_attrs:
-      if(i.get(attr) != None):
-        payload[i.get("name")] = i.get(attr)
-
-  load_dotenv(env_file)
-
-  ZAIM_USERNAME = os.getenv('ZAIM_USERNAME')
-  ZAIM_PASSWORD = os.getenv('ZAIM_PASSWORD')
-  payload['email'] = ZAIM_USERNAME
-  payload['password'] = ZAIM_PASSWORD
-
-  return payload
-
-# Zaimのサイトにログイン
-def login(env_file: str = ".env") -> requests.sessions.Session:
+def login(
+    env_file: str = ".env",
+) -> WebSession:
 
   session = requests.Session()
-  response = session.get("https://zaim.net/user_session/new")
+  response = session.get(
+    "https://zaim.net/user_session/new", allow_redirects=True)
   response.raise_for_status()
 
-  payload = create_payload_for_login(response, env_file)
+  load_dotenv(env_file)
+  zaim_username = os.getenv('ZAIM_USERNAME')
+  zaim_password = os.getenv('ZAIM_PASSWORD')
 
-  # ログイン
-  response = session.post("https://id.kufu.jp/signin/basic", data=payload)
+  cookies_playwright = []
+
+  with sync_playwright() as playwright:
+    websession = WebSession(playwright, record_video=False)
+
+    websession.page.goto(response.url)
+    websession.page.get_by_placeholder("メールアドレス").click()
+    websession.page.get_by_placeholder("メールアドレス").fill(zaim_username)
+    websession.page.get_by_placeholder("パスワード").click()
+    websession.page.get_by_placeholder("パスワード").fill(zaim_password)
+    websession.page.get_by_role("button", name="利用規約に同意して ログイン").click()
+
+    cookies_playwright = websession.context.cookies()
+
+    websession.close()
+
+  # Playwrightのクッキーをrequests形式に変換
+  for cookie in cookies_playwright:
+    session.cookies.set(cookie['name'], cookie['value'], domain=cookie['domain'])
+
+  response = session.get("https://zaim.net/home")
   response.raise_for_status()
 
   return session
 
+
 if __name__ == '__main__':
+
   login()
