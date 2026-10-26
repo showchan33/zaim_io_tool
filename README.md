@@ -56,6 +56,12 @@ ZAIM_USERNAME="your-true-email@example.com"
 ZAIM_PASSWORD="01234567"
 ```
 
+### 二段階認証を有効にしている場合
+
+Google Authenticator や Authy などの認証アプリを使う二段階認証を有効にしている場合、ログイン時にターミナルで6桁の認証コードを入力します。認証コードや認証アプリの秘密鍵を `.env` に保存する必要はありません。
+
+標準入力を使えない呼び出し元では、実行時だけ環境変数 `ZAIM_TOTP_CODE` に6桁のコードを設定できます。この環境変数は認証コードを保存するものではなく、実行後に破棄してください。
+
 # 使い方
 
 ## 家計簿のダウンロード
@@ -88,6 +94,7 @@ python3 download.py 2024 1 -o ./csvoutput/202401.csv
 #### 出力結果
 ```
 Trying to login...
+Zaimの認証アプリに表示された6桁のコードを入力してください: 123456
 Downloading csv file...
 Saved as ./csvoutput/202401.csv.
 ```
